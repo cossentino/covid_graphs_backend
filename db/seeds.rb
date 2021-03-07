@@ -8,9 +8,9 @@
 
 
 
-massachusetts = State.create(name: "Massachusetts", id: 25, region: "northeast", population: 6949503)
+# massachusetts = State.create(name: "Massachusetts", id: 25, region: "northeast", population: 6949503)
 
 
-middlesex = County.create(name: "Middlesex", fips: 25017, total_cases: 112643, population: 1611699)
-suffolk = County.create(name: "Suffolk", fips: 25025, total_cases: 78922, population: 803907)
-worcester = County.create(name: "Worcester", fips: 25027, total_cases: 65967, population: 830622)
+middlesex = County.create(name: "Middlesex", fips: 25017, total_cases: 112643, population: 1611699, state_id: 25)
+suffolk = County.create(name: "Suffolk", fips: 25025, total_cases: 78922, population: 803907, state_id: 25)
+worcester = County.create(name: "Worcester", fips: 25027, total_cases: 65967, population: 830622, state_id: 25)
