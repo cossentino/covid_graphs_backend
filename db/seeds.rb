@@ -7,8 +7,12 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
+State.destroy_all
+County.destroy_all
 
-# massachusetts = State.create(name: "Massachusetts", id: 25, region: "northeast", population: 6949503)
+
+
+massachusetts = State.create(name: "Massachusetts", id: 25, region: "northeast", population: 6949503)
 
 
 middlesex = County.create(name: "Middlesex", fips: 25017, total_cases: 112643, population: 1611699, state_id: 25)

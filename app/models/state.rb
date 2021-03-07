@@ -1,5 +1,5 @@
 class State < ApplicationRecord
-  has_many :counties
+  has_many :counties, dependent: :destroy
 
 
   def total_by_county(attribute)
