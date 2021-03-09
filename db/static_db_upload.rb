@@ -1,7 +1,8 @@
 
 require "csv"
+require "/Users/iancossentino/Development/code/Mod4/4_project/covid_graphs_backend/app"
 
-statesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv"
+statesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/nst-est2019-alldata.csv"
 countiesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties.csv"
 
 def create_states_with_population_array(csv)
@@ -16,13 +17,12 @@ def create_states_with_population_array(csv)
   statesArray.each do |e|
     s = State.new(name: e[0], population: e[1])
     if s.save
+      puts s.name
+    else
+      puts "error"
+    end
+  end
 end
 
-def create_states_from_array(array)
-  array.each do |e|
-    State.new(name: e)
 
-
-
-
-create_unique_states_array(statesFile)
+create_states_with_population_array(statesFile)
