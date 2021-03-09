@@ -18,6 +18,29 @@ recent_counties_path = "/Users/iancossentino/Development/code/Mod4/4_project/Dat
 state_fips_prefix_file = "/Users/iancossentino/Development/code/Mod4/4_project/Data/fips_prefixes.csv"
 
 
+def add_total_cases_to_counties(csv)
+  csv = CSV.read(csv)
+  csv[1001..2000].each do |row|
+    county = County.find_by(fips: row[-3].to_i)
+    if county
+      if county.total_cases == nil
+        current_cases = 0
+      else
+        current_cases = county.total_cases
+      end
+      county.update(total_cases: current_cases + row[-2].to_i)
+    end
+  end
+end
+
+add_total_cases_to_counties("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties.csv")
+
+
+
+
+
+
+
 # Add FIPS codes to unknown totals 
 # def add_filler_fips_to_unknowns(csv)
 #   csv = CSV.read(csv)
@@ -35,23 +58,25 @@ state_fips_prefix_file = "/Users/iancossentino/Development/code/Mod4/4_project/D
 # add_filler_fips_to_unknowns(recent_counties_path)
 
 
-def add_unknown_counties
-  states = State.all
-  states.each do |s|
-    if !s.counties.pluck(:name).include?("Unknown")
-      c = s.counties.build(name: "Unknown", fips: "#{s.fips_prefix}000")
-      if c.save
-        puts s.name
-      else
-        puts "error"
-      end
-    end
-  end
-end
+
+# Ensured all states had an "Unknown" county
+# def add_unknown_counties
+#   states = State.all
+#   states.each do |s|
+#     if !s.counties.pluck(:name).include?("Unknown")
+#       c = s.counties.build(name: "Unknown", fips: "#{s.fips_prefix}000")
+#       if c.save
+#         puts s.name
+#       else
+#         puts "error"
+#       end
+#     end
+#   end
+# end
 
 
 
-add_unknown_counties
+# add_unknown_counties
 
 
 #Link counties to states
