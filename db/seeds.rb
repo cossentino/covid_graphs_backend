@@ -18,22 +18,17 @@ recent_counties_path = "/Users/iancossentino/Development/code/Mod4/4_project/Dat
 state_fips_prefix_file = "/Users/iancossentino/Development/code/Mod4/4_project/Data/fips_prefixes.csv"
 
 
-def add_total_cases_to_counties(csv)
+def add_total_cases_to_states(csv)
   csv = CSV.read(csv)
-  csv[1001..2000].each do |row|
-    county = County.find_by(fips: row[-3].to_i)
-    if county
-      if county.total_cases == nil
-        current_cases = 0
-      else
-        current_cases = county.total_cases
-      end
-      county.update(total_cases: current_cases + row[-2].to_i)
+  csv[-55..-1].each do |c|
+    s = State.find_by(name: c[1])
+    if s
+      s.update(total_cases: c[-2].to_i)
     end
   end
 end
 
-add_total_cases_to_counties("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties.csv")
+add_total_cases_to_states("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv")
 
 
 
