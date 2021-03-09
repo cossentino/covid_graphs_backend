@@ -7,13 +7,13 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 require "csv"
 
-State.destroy_all
-County.destroy_all
+# State.destroy_all
+# County.destroy_all
 
 
 statesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/nst-est2019-alldata.csv"
 countiesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties.csv"
-
+state_fips_prefix_file = "/Users/iancossentino/Development/code/Mod4/4_project/Data/fips_prefixes.csv"
 
 # Add State names + population to database
 
@@ -36,6 +36,19 @@ countiesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-cou
 #   end
 # end
 
+
+
+def add_fips_prefixes_to_states(csv)
+  csv = CSV.read(csv)
+  csv.each do |e|
+    s = State.find_by(name: e[0])
+    if s
+      s.update(fips_prefix: e[2])
+    end
+  end
+end
+
+add_fips_prefixes_to_states(state_fips_prefix_file)
 
 # create_states_with_population_array(statesFile)
 
