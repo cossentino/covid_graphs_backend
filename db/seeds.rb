@@ -28,7 +28,19 @@ def add_total_cases_to_states(csv)
   end
 end
 
-add_total_cases_to_states("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv")
+def add_total_cases_to_counties(csv)
+  csv = CSV.read(csv)
+  csv[-3246..-1].each do |row|
+    if row[1] != "Unknown"
+      c = County.find_by(fips: row[-3].to_i)
+      if c
+        c.update(total_cases: row[-2].to_i)
+      end
+    end
+  end
+end
+
+add_total_cases_to_counties("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent-cleaned.csv")
 
 
 
