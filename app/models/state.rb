@@ -1,5 +1,6 @@
 class State < ApplicationRecord
   has_many :counties, dependent: :destroy
+  validates :name, uniqueness: true
 
 
   def total_by_county(attribute)

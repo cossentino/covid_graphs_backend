@@ -2,29 +2,27 @@
 require "csv"
 
 statesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv"
+countiesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties.csv"
 
-
-# array = [["1/21/20", "Washington", "53", "1", "0"], ["1/22/20", "Washington", "53", "1", "0"], ['1/25/20','Illinois','17','1','0']]
-
-
-# statesArray = []
-# array.each do |e|
-#   if !statesArray.include?(e[1])
-#     statesArray << e[1]
-#   end
-# end
-
-
-def create_unique_states_array(csv)
+def create_states_with_population_array(csv)
   csv = CSV.read(csv)
-  csv.delete_at(0)
+  csv = csv[6..-1]
   statesArray = []
   csv.each do |e|
-    if !statesArray.include?(e[1])
-      statesArray << e[1]
+    if !statesArray.include?(e[4])
+      statesArray << [e[4], e[5]]
     end
   end
-  puts statesArray
+  statesArray.each do |e|
+    s = State.new(name: e[0], population: e[1])
+    if s.save
 end
+
+def create_states_from_array(array)
+  array.each do |e|
+    State.new(name: e)
+
+
+
 
 create_unique_states_array(statesFile)
