@@ -13,58 +13,75 @@ require "csv"
 
 statesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/nst-est2019-alldata.csv"
 countiesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties.csv"
-
+cleaned_file_path = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent-cleaned.csv"
+recent_counties_path = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent.csv"
 state_fips_prefix_file = "/Users/iancossentino/Development/code/Mod4/4_project/Data/fips_prefixes.csv"
 
-# Link counties to states via fips codes
+
+# Add FIPS codes to unknown totals 
+# def add_filler_fips_to_unknowns(csv)
+#   csv = CSV.read(csv)
+#   csv.each do |e|
+#     if e[1] == "Unknown"
+#       s = State.find_by(name: e[2])
+#       if s
+#         e[-3] = "#{s.fips_prefix}000"
+#       end
+#     end
+#   end
+#   CSV.open("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent-cleaned.csv", 'wb') { |f| csv.each{|row| f << row}}
+# end
+
+# add_filler_fips_to_unknowns(recent_counties_path)
 
 
-recent_counties_path = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent.csv"
-cleaned_file_path = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent-cleaned.csv"
-
-
-
-def add_filler_fips_to_unknowns(csv)
-  csv = CSV.read(csv)
-  csv.each do |e|
-    if e[1] == "Unknown"
-      s = State.find_by(name: e[2])
-      if s
-        e[-3] = "#{s.fips_prefix}000"
+def add_unknown_counties
+  states = State.all
+  states.each do |s|
+    if !s.counties.pluck(:name).include?("Unknown")
+      c = s.counties.build(name: "Unknown", fips: "#{s.fips_prefix}000")
+      if c.save
+        puts s.name
+      else
+        puts "error"
       end
     end
   end
-  CSV.open("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent-cleaned.csv", 'wb') { |f| csv.each{|row| f << row}}
 end
 
-add_filler_fips_to_unknowns(recent_counties_path)
+
+
+add_unknown_counties
+
+
+#Link counties to states
 
 # def link_counties_to_states(csv)
 #   csv = CSV.read(csv)
 #   csv.delete_at(0)
 #   csv.each do |e|
-#     if e[1] != "Unknown"
-#       prefix = e[3][0..1]
-#       s = State.find_by(fips_prefix: prefix)
+#     # if e[1] != "Unknown"
+#     s = State.find_by(name: e[2])
+#     if s
 #       c = s.counties.build(name: e[1], fips: e[3].to_i)
 #       if c.save
 #         puts c.name
 #       else
-#         puts "EEEEROOOOOOOOR"
-#       end
-#     elsif e[1] == "Unknown"
-#       s = State.find_by(name: e[2])
-#       c = s.counties.build(name: "Unknown", fips: "#{s.fips_prefix}000".to_i)
-#       if c.save
-#         puts c.name
-#       else
-#         puts "UNKNOWN WAS NOT SAVED"
+#         puts c, "error"
 #       end
 #     end
+#     # elsif e[1] == "Unknown"
+#     #   s = State.find_by(name: e[2])
+#     #   c = s.counties.build(name: "Unknown", fips: "#{s.fips_prefix}000".to_i)
+#     #   if c.save
+#     #     puts c.name
+#     #   else
+#     #     puts "UNKNOWN WAS NOT SAVED"
+#     #   end
 #   end
 # end
 
-# link_counties_to_states("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent.csv")
+# link_counties_to_states(cleaned_file_path)
 
 
 
