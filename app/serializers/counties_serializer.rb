@@ -1,5 +1,6 @@
 class CountiesSerializer
   include FastJsonapi::ObjectSerializer
   belongs_to :state
-  attributes 
+  attributes :name, :fips, :population, :total_cases, :state_id
+
 end
