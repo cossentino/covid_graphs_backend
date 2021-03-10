@@ -1,7 +1,11 @@
 class Api::V1::CountiesController < ApplicationController
 
   def index
-    counties = County.all
+    if params[:state_id]
+      counties = State.find(params[:state_id].to_i).counties
+    else
+      counties = County.all
+    end
     render json: CountiesSerializer.new(counties)
   end
 
