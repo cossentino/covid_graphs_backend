@@ -18,29 +18,55 @@ recent_counties_path = "/Users/iancossentino/Development/code/Mod4/4_project/Dat
 state_fips_prefix_file = "/Users/iancossentino/Development/code/Mod4/4_project/Data/fips_prefixes.csv"
 
 
-def add_total_cases_to_states(csv)
+
+# Add county populations
+
+def add_county_pops(csv)
   csv = CSV.read(csv)
-  csv[-55..-1].each do |c|
-    s = State.find_by(name: c[1])
-    if s
-      s.update(total_cases: c[-2].to_i)
+  csv.each do |row|
+    c = County.find_by(fips: row[7].to_i)
+    if c
+      c.update(population: row[-1])
     end
   end
 end
 
-def add_total_cases_to_counties(csv)
-  csv = CSV.read(csv)
-  csv[-3246..-1].each do |row|
-    if row[1] != "Unknown"
-      c = County.find_by(fips: row[-3].to_i)
-      if c
-        c.update(total_cases: row[-2].to_i)
-      end
-    end
-  end
-end
 
-add_total_cases_to_counties("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent-cleaned.csv")
+add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/county_populations.csv")
+
+
+
+
+
+
+
+
+
+# Add cumulative cases to states and counties
+
+# def add_total_cases_to_states(csv)
+#   csv = CSV.read(csv)
+#   csv[-55..-1].each do |c|
+#     s = State.find_by(name: c[1])
+#     if s
+#       s.update(total_cases: c[-2].to_i)
+#     end
+#   end
+# end
+
+# def add_total_cases_to_counties(csv)
+#   csv = CSV.read(csv)
+#   csv[-3246..-1].each do |row|
+#     if row[1] != "Unknown"
+#       c = County.find_by(fips: row[-3].to_i)
+#       if c
+#         c.update(total_cases: row[-2].to_i)
+#       end
+#     end
+#   end
+# end
+
+# add_total_cases_to_counties("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent-cleaned.csv")
 
 
 
