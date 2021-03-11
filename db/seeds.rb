@@ -29,16 +29,25 @@ end
 def daily_cases(array)
   array2 = array.map do |el|
     index = array.index(el)
-    index == 0 ? el[1] : el[1] - array.fetch(index - 1)[1]
+    index == 0 ? el : [el[0], el[1] - array.fetch(index - 1)[1]]
   end
-  puts array2
+  array2
 end
 
 alabama_total_cases_by_day = one_state_total_cases_by_day_array("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv")
 alabama_daily_cases = daily_cases(alabama_total_cases_by_day)
+# puts alabama_total_cases_by_day
+# puts alabama_daily_cases
 
-# alabama_daily_cases.each do |case_num|
-#   sd = StateDay.new()
+al = State.find_by(name: "Alabama")
+alabama_daily_cases.each do |case_num|
+  sd = StateDay.new(state_id: al.id, date: case_num[0], cases: case_num[1])
+  if sd.save
+    next
+  else
+    puts "error"
+  end
+end
 
 
 
