@@ -11,35 +11,75 @@ require "csv"
 # County.destroy_all
 
 
-statesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/nst-est2019-alldata.csv"
+statesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv"
 countiesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties.csv"
 cleaned_file_path = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent-cleaned.csv"
 recent_counties_path = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent.csv"
 state_fips_prefix_file = "/Users/iancossentino/Development/code/Mod4/4_project/Data/fips_prefixes.csv"
 
 
+# STATES_ARRAY = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"] 
+
+# def populate_states_total_cases_by_day
+#   csv = CSV.read("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv")
+#   STATES_ARRAY.each do |state_name|
+#     my_state = State.find_by(name: state_name)
+#     state_total_cases_by_day = (one_state_total_cases_by_day_array(csv, state_name))
+#     state_daily_cases = daily_cases(state_total_cases_by_day)
+#     state_daily_cases.each do |case_date|
+#       sd = StateDay.new(state_id: my_state.id, date: case_date[0], cases: case_date[1])
+#       if sd.save
+#         next
+#       else
+#         puts "error #{my_state.name} #{case_date} "
+#       end
+#     end
+#   end
+# end
+
+# # Add cases per day data
+# def one_state_total_cases_by_day_array(csv, state_name)
+#   csv_one_state = csv.select{|row| row[1] == state_name }
+#   total_cases_by_day = csv_one_state.map {|row| [row[0], row[-2].to_i] }
+# end
+
+# def daily_cases(array)
+#   array2 = array.map do |el|
+#     index = array.index(el)
+#     index == 0 ? el : [el[0], el[1] - array.fetch(index - 1)[1]]
+#   end
+#   array2
+# end
+
+# populate_states_total_cases_by_day
+
+# alabama_total_cases_by_day = one_state_total_cases_by_day_array("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv")
+# alabama_daily_cases = daily_cases(alabama_total_cases_by_day)
+
+# al = State.find_by(name: "Alabama")
+# alabama_daily_cases.each do |case_num|
+#   sd = StateDay.new(state_id: al.id, date: case_num[0], cases: case_num[1])
+#   if sd.save
+#     next
+#   else
+#     puts "error"
+#   end
+# end
 
 # Add county populations
 
-def add_county_pops(csv)
-  csv = CSV.read(csv)
-  csv.each do |row|
-    c = County.find_by(fips: row[7].to_i)
-    if c
-      c.update(population: row[-1])
-    end
-  end
-end
+# def add_county_pops(csv)
+#   csv = CSV.read(csv)
+#   csv.each do |row|
+#     c = County.find_by(fips: row[7].to_i)
+#     if c
+#       c.update(population: row[-1])
+#     end
+#   end
+# end
 
 
-add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/county_populations.csv")
-
-
-
-
-
-
-
+# add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/county_populations.csv")
 
 
 # Add cumulative cases to states and counties
@@ -67,10 +107,6 @@ add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/count
 # end
 
 # add_total_cases_to_counties("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent-cleaned.csv")
-
-
-
-
 
 
 
@@ -107,8 +143,6 @@ add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/count
 #   end
 # end
 
-
-
 # add_unknown_counties
 
 
@@ -142,9 +176,6 @@ add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/count
 # link_counties_to_states(cleaned_file_path)
 
 
-
-
-
 # Add State names + population to database
 
 # def create_states_with_population_array(csv)
@@ -165,8 +196,6 @@ add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/count
 #     end
 #   end
 # end
-
-
 
 
 # Add county names + fips codes to database
@@ -190,9 +219,6 @@ add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/count
 #   end
 # end
 
-
-
-
 # def add_fips_prefixes_to_states(csv)
 #   csv = CSV.read(csv)
 #   csv.each do |e|
@@ -207,9 +233,5 @@ add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/count
 
 # create_states_with_population_array(statesFile)
 
-
-# middlesex = County.create(name: "Middlesex", fips: 25017, total_cases: 112643, population: 1611699, state_id: 25)
-# suffolk = County.create(name: "Suffolk", fips: 25025, total_cases: 78922, population: 803907, state_id: 25)
-# worcester = County.create(name: "Worcester", fips: 25027, total_cases: 65967, population: 830622, state_id: 25)
 
 

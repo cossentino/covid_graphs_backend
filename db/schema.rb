@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_09_215659) do
+ActiveRecord::Schema.define(version: 2021_03_11_142845) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,15 @@ ActiveRecord::Schema.define(version: 2021_03_09_215659) do
     t.integer "population"
     t.bigint "state_id"
     t.index ["state_id"], name: "index_counties_on_state_id"
+  end
+
+  create_table "state_days", force: :cascade do |t|
+    t.bigint "state_id"
+    t.integer "cases"
+    t.date "date"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["state_id"], name: "index_state_days_on_state_id"
   end
 
   create_table "states", force: :cascade do |t|
