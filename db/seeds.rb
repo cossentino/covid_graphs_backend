@@ -18,43 +18,53 @@ recent_counties_path = "/Users/iancossentino/Development/code/Mod4/4_project/Dat
 state_fips_prefix_file = "/Users/iancossentino/Development/code/Mod4/4_project/Data/fips_prefixes.csv"
 
 
+# STATES_ARRAY = ["Alabama", "Alaska", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia", "Florida", "Georgia", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"] 
 
-# Add cases per day data
-def one_state_total_cases_by_day_array(csv)
-  csv = CSV.read(csv)
-  csv_alabama = csv.select{|row| row[1] == "Alabama" }
-  alabama_total_cases_by_day = csv_alabama.map {|row| [row[0], row[-2].to_i] }
-end
+# def populate_states_total_cases_by_day
+#   csv = CSV.read("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv")
+#   STATES_ARRAY.each do |state_name|
+#     my_state = State.find_by(name: state_name)
+#     state_total_cases_by_day = (one_state_total_cases_by_day_array(csv, state_name))
+#     state_daily_cases = daily_cases(state_total_cases_by_day)
+#     state_daily_cases.each do |case_date|
+#       sd = StateDay.new(state_id: my_state.id, date: case_date[0], cases: case_date[1])
+#       if sd.save
+#         next
+#       else
+#         puts "error #{my_state.name} #{case_date} "
+#       end
+#     end
+#   end
+# end
 
-def daily_cases(array)
-  array2 = array.map do |el|
-    index = array.index(el)
-    index == 0 ? el : [el[0], el[1] - array.fetch(index - 1)[1]]
-  end
-  array2
-end
+# # Add cases per day data
+# def one_state_total_cases_by_day_array(csv, state_name)
+#   csv_one_state = csv.select{|row| row[1] == state_name }
+#   total_cases_by_day = csv_one_state.map {|row| [row[0], row[-2].to_i] }
+# end
 
-alabama_total_cases_by_day = one_state_total_cases_by_day_array("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv")
-alabama_daily_cases = daily_cases(alabama_total_cases_by_day)
-# puts alabama_total_cases_by_day
-# puts alabama_daily_cases
+# def daily_cases(array)
+#   array2 = array.map do |el|
+#     index = array.index(el)
+#     index == 0 ? el : [el[0], el[1] - array.fetch(index - 1)[1]]
+#   end
+#   array2
+# end
 
-al = State.find_by(name: "Alabama")
-alabama_daily_cases.each do |case_num|
-  sd = StateDay.new(state_id: al.id, date: case_num[0], cases: case_num[1])
-  if sd.save
-    next
-  else
-    puts "error"
-  end
-end
+# populate_states_total_cases_by_day
 
+# alabama_total_cases_by_day = one_state_total_cases_by_day_array("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv")
+# alabama_daily_cases = daily_cases(alabama_total_cases_by_day)
 
-
-
-
-
-
+# al = State.find_by(name: "Alabama")
+# alabama_daily_cases.each do |case_num|
+#   sd = StateDay.new(state_id: al.id, date: case_num[0], cases: case_num[1])
+#   if sd.save
+#     next
+#   else
+#     puts "error"
+#   end
+# end
 
 # Add county populations
 
@@ -132,8 +142,6 @@ end
 #     end
 #   end
 # end
-
-
 
 # add_unknown_counties
 
