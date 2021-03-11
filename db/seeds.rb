@@ -11,7 +11,7 @@ require "csv"
 # County.destroy_all
 
 
-statesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/nst-est2019-alldata.csv"
+statesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv"
 countiesFile = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties.csv"
 cleaned_file_path = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent-cleaned.csv"
 recent_counties_path = "/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent.csv"
@@ -23,19 +23,22 @@ state_fips_prefix_file = "/Users/iancossentino/Development/code/Mod4/4_project/D
 def one_state_total_cases_by_day_array(csv)
   csv = CSV.read(csv)
   csv_alabama = csv.select{|row| row[1] == "Alabama" }
-  alabama_total_cases_by_day = csv_alabama.map {|row| row[-2].to_i }
+  alabama_total_cases_by_day = csv_alabama.map {|row| [row[0], row[-2].to_i] }
 end
 
 def daily_cases(array)
   array2 = array.map do |el|
     index = array.index(el)
-    index == 0 ? el : el - array.fetch(index - 1)
+    index == 0 ? el[1] : el[1] - array.fetch(index - 1)[1]
   end
   puts array2
 end
 
 alabama_total_cases_by_day = one_state_total_cases_by_day_array("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv")
-daily_cases(alabama_total_cases_by_day)
+alabama_daily_cases = daily_cases(alabama_total_cases_by_day)
+
+# alabama_daily_cases.each do |case_num|
+#   sd = StateDay.new()
 
 
 

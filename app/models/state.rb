@@ -1,5 +1,6 @@
 class State < ApplicationRecord
   has_many :counties, dependent: :destroy
+  has_many :state_days
   validates :name, uniqueness: true
 
 
