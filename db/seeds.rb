@@ -234,8 +234,4 @@ state_fips_prefix_file = "/Users/iancossentino/Development/code/Mod4/4_project/D
 # create_states_with_population_array(statesFile)
 
 
-# middlesex = County.create(name: "Middlesex", fips: 25017, total_cases: 112643, population: 1611699, state_id: 25)
-# suffolk = County.create(name: "Suffolk", fips: 25025, total_cases: 78922, population: 803907, state_id: 25)
-# worcester = County.create(name: "Worcester", fips: 25027, total_cases: 65967, population: 830622, state_id: 25)
-
 
