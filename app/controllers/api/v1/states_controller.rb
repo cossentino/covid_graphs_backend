@@ -6,7 +6,10 @@ class Api::V1::StatesController < ApplicationController
   end
 
 
-
+  def show
+    state = State.find(params[:id])
+    render json: StatesSerializer.new(state)
+  end
 
 
 
