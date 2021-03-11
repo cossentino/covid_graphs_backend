@@ -19,20 +19,23 @@ state_fips_prefix_file = "/Users/iancossentino/Development/code/Mod4/4_project/D
 
 
 
-# Add county populations
-
-def add_county_pops(csv)
+# Add cases per day data
+def one_state_total_cases_by_day_array(csv)
   csv = CSV.read(csv)
-  csv.each do |row|
-    c = County.find_by(fips: row[7].to_i)
-    if c
-      c.update(population: row[-1])
-    end
-  end
+  csv_alabama = csv.select{|row| row[1] == "Alabama" }
+  alabama_total_cases_by_day = csv_alabama.map {|row| row[-2].to_i }
 end
 
+def daily_cases(array)
+  array2 = array.map do |el|
+    index = array.index(el)
+    index == 0 ? el : el - array.fetch(index - 1)
+  end
+  puts array2
+end
 
-add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/county_populations.csv")
+alabama_total_cases_by_day = one_state_total_cases_by_day_array("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-states.csv")
+daily_cases(alabama_total_cases_by_day)
 
 
 
@@ -40,6 +43,21 @@ add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/count
 
 
 
+
+# Add county populations
+
+# def add_county_pops(csv)
+#   csv = CSV.read(csv)
+#   csv.each do |row|
+#     c = County.find_by(fips: row[7].to_i)
+#     if c
+#       c.update(population: row[-1])
+#     end
+#   end
+# end
+
+
+# add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/county_populations.csv")
 
 
 # Add cumulative cases to states and counties
@@ -67,10 +85,6 @@ add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/count
 # end
 
 # add_total_cases_to_counties("/Users/iancossentino/Development/code/Mod4/4_project/Data/us-counties-recent-cleaned.csv")
-
-
-
-
 
 
 
@@ -142,9 +156,6 @@ add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/count
 # link_counties_to_states(cleaned_file_path)
 
 
-
-
-
 # Add State names + population to database
 
 # def create_states_with_population_array(csv)
@@ -167,8 +178,6 @@ add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/count
 # end
 
 
-
-
 # Add county names + fips codes to database
 
 # def create_states_with_population_array(csv)
@@ -189,9 +198,6 @@ add_county_pops("/Users/iancossentino/Development/code/Mod4/4_project/Data/count
 #     end
 #   end
 # end
-
-
-
 
 # def add_fips_prefixes_to_states(csv)
 #   csv = CSV.read(csv)
