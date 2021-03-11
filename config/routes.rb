@@ -3,9 +3,10 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :states, only: [:index, :show] do
+        resources :state_days, only: [:index]
         resources :counties, only: [:index]
       end
-      resources :counties, only: [:index]
+      resources :counties, only: [:index, :show]
     end
   end
   
