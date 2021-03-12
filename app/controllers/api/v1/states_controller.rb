@@ -13,11 +13,11 @@ class Api::V1::StatesController < ApplicationController
 
   def update
     state = State.find_by(id: params[:id])
-    puts state.total_cases
-    if state.update(total_cases: state.total_cases + params[:total_cases].to_i)
-      render json: "rendering", status: :accepted
+    if state.update(total_cases: params[:total_cases].to_i)
+      render json: StatesSerializer.new(state)
     else
       render json: {errors: sd.errors.full_messages}, status: :unprocessible_entity
+    end
   end
 
 
