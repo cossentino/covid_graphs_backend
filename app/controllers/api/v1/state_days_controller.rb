@@ -10,7 +10,7 @@ class Api::V1::StateDaysController < ApplicationController
     state = State.find_by(id: state_days_params[:state_id].to_i)
     sd = state.state_days.build(date: state_days_params[:date], cases: state_days_params[:cases])
     if sd.save
-      puts "success"
+      render json: StateDaysSerializer.new(sd), status: :accepted
     else
       puts "failure"
     end
