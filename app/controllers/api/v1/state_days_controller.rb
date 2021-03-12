@@ -12,7 +12,7 @@ class Api::V1::StateDaysController < ApplicationController
     if sd.save
       render json: StateDaysSerializer.new(sd), status: :accepted
     else
-      puts "failure"
+      render json: {errors: sd.errors.full_messages}, status: :unprocessible_entity
     end
   end
 
