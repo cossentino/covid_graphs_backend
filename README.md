@@ -1,12 +1,12 @@
 # COVID Graphs - Backend
 
-This single-page application displays and allows addition of total state- and county-level COVID-19 cases, as well as state-level cases over time. 
+This single-page application displays total state- and county-level COVID-19 cases, state-level cases over time, and allows introduction of new data at the state-level as it becomes available. 
 
 ***Front-end Repo: https://github.com/cossentino/covid_graphs_frontend ***
 
 ## For Flatiron School project submission:
     
-   Non-technical demo video: "#"
+   Non-technical demo video: "https://www.youtube.com/watch?v=-mPmNgSy-No"
    
    Blog post: "https://icossentino.medium.com/creating-a-graph-from-database-to-class-to-html-9feef81ab320"
     
